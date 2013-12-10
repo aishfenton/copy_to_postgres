@@ -1,0 +1,23 @@
+# Scala / Play
+logs
+project/project
+project/target
+target
+tmp
+dist
+/out
+/RUNNING_PID
+
+# OS files
+.DS_Store
+
+# Text Editors
+*.swp
+.history
+/.idea
+/.idea_modules
+/.settings
+/.project
+/.classpath
+/*.iml
+
