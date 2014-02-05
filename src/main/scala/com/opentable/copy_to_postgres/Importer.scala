@@ -25,8 +25,8 @@ class Importer(dbUrl: String, dbConnectionProps: Map[Symbol,String], table: Stri
 
     val records = fileType match {
       case AVRO => new source.Avro(files, mapping)
+      case CSV => new source.CSV(files, mapping)
       //case JSON => new source.JSON
-      //case CSV => new source.CSV
     }
 
     strategy.importRecords(records, mapping.map(_._2))

@@ -29,7 +29,7 @@ class MappingParser extends RegexParsers {
  
   def ident: Parser[Symbol] = """\w+""".r ^^ { s => Symbol(s) }
 
-  def stringLiteral: Parser[StringLiteral] = "\"" ~> """\w+""".r <~ "\"" ^^ { s => StringLiteral(s) }
+  def stringLiteral: Parser[StringLiteral] = "\"" ~> """[^\"]*""".r <~ "\"" ^^ { s => StringLiteral(s) }
   
   def longLiteral: Parser[LongLiteral] = """-?\d+""".r ^^ { s => LongLiteral(s.toLong) }
   

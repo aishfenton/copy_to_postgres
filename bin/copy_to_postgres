@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-scala -cp /Users/afenton/Documents/opentable/copy_to_postgres/target/scala-2.10/CopyToPostgres-assembly-0.1.jar com.opentable.copy_to_postgres.cli.App ${1+"$@"}
+scala -cp /Users/afenton/Documents/opentable/copy_to_postgres/target/scala-2.10/CopyToPostgres-assembly-0.2.0.jar com.opentable.copy_to_postgres.cli.App ${1+"$@"}
