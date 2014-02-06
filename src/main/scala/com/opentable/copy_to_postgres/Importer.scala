@@ -5,7 +5,8 @@ import com.opentable.copy_to_postgres.mapping.Mapping
 import com.opentable.copy_to_postgres.source.Record
 import com.opentable.copy_to_postgres.strategy.CopyStrategy
 
-class Importer(dbUrl: String, dbConnectionProps: Map[Symbol,String], table: String, aroundCommands: (Option[String],Option[String])) {
+class Importer(dbUrl: String, dbConnectionProps: Map[Symbol,String], table: String, aroundCommands: (Option[String],Option[String]),
+  miscOptions: Map[Symbol,String]) {
   import SourceType._
  
   val strategy = new CopyStrategy(dbUrl, dbConnectionProps, table, aroundCommands)
@@ -25,7 +26,7 @@ class Importer(dbUrl: String, dbConnectionProps: Map[Symbol,String], table: Stri
 
     val records = fileType match {
       case AVRO => new source.Avro(files, mapping)
-      case CSV => new source.CSV(files, mapping)
+      case CSV => new source.CSV(files, mapping, miscOptions.getOrElse('csv_sep, ",").charAt(0))
       //case JSON => new source.JSON
     }
 

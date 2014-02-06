@@ -7,7 +7,7 @@ import com.opentable.copy_to_postgres._
 object CLI {
   val usage = """
 Usage: 
-  copy_to_postgres -m mapping -t table --db-url url [--type JSON|AVRO|CSV] [--db-user user] [--db-pass pass] [--version] input-file
+  copy_to_postgres -m mapping -t table --db-url url [--type JSON|AVRO|CSV] [--db-user user] [--db-pass pass] [--version] [--csv-sep sep] input-file
 
 Example:
 
@@ -49,6 +49,8 @@ Example:
           nextOption(map ++ Map('post_cmd -> value), tail)
         case "--type" :: value :: tail =>
           nextOption(map ++ Map('type -> value), tail)
+        case "--csv-sep" :: value :: tail =>
+          nextOption(map ++ Map('csv_sep -> value), tail)
         case "--version" :: _ => {
           println("version: " + getVersion.toString)
           exit(0)
@@ -84,7 +86,7 @@ object App {
 
     val aroundCommands = (options.get('pre_cmd), options.get('post_cmd))
 
-    val importer = new Importer(dbURL, dbConnectionProps, table, aroundCommands)
+    val importer = new Importer(dbURL, dbConnectionProps, table, aroundCommands, options)
     importer.performImport(file, fileType, mapping)
   }
 }
