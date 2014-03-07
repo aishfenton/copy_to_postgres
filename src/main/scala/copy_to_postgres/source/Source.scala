@@ -1,6 +1,6 @@
-package com.opentable.copy_to_postgres.source
+package copy_to_postgres.source
 
-import com.opentable.copy_to_postgres.mapping._
+import copy_to_postgres.mapping._
 import scala.collection.mutable.ListBuffer
 
 trait Source[T] extends Iterator[Record] {

@@ -1,19 +1,21 @@
-package com.opentable.copy_to_postgres.strategy
+package copy_to_postgres.strategy
 
 import java.sql.{Connection, DriverManager, ResultSet};
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 
-import com.opentable.copy_to_postgres.source.Record
+import copy_to_postgres.source.Record
 
 trait ImportStrategy {
   val dbUrl: String
-  val dbConnectionProps: Map[Symbol,String]
+  val dbUser: String
+  val dbPass: String
   val table: String
-  val aroundCommands: (Option[String],Option[String]) 
+  val preCmd: Option[String]
+  val postCmd: Option[String]
 
   Class.forName("org.postgresql.Driver");
-  val connStr = s"jdbc:postgresql://$dbUrl?user=${dbConnectionProps('db_user)}&password=${dbConnectionProps('db_pass)}"
+  val connStr = s"jdbc:postgresql://$dbUrl?user${dbUser}&password=${dbPass}"
 
   var conn:BaseConnection = null; 
   
@@ -45,13 +47,17 @@ trait ImportStrategy {
   }
 
   protected def execPreCmd = {
-    println(s"Exec pre command: ${aroundCommands._1}")
-    aroundCommands._1.foreach { cmd => conn.createStatement.execute(cmd) }
+    preCmd map { cmd => 
+      println(s"Exec pre command: ${cmd}")
+      conn.createStatement.execute(cmd) 
+    }
   }
   
   protected def execPostCmd = {
-    println(s"Exec post command: ${aroundCommands._2}")
-    aroundCommands._2.foreach { cmd => conn.createStatement.execute(cmd) }
+    postCmd map { cmd => 
+      println(s"Exec pre command: ${cmd}")
+      conn.createStatement.execute(cmd) 
+    }
   }
 
 }

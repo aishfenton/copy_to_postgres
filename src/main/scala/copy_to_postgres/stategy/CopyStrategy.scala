@@ -1,14 +1,14 @@
-package com.opentable.copy_to_postgres.strategy
+package copy_to_postgres.strategy
 
 import java.sql.{Connection, DriverManager, ResultSet};
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 
-import com.opentable.copy_to_postgres.source.Record
-import com.opentable.copy_to_postgres.util.IteratorInputStream
+import copy_to_postgres.source.Record
+import copy_to_postgres.util.IteratorInputStream
 
-class CopyStrategy(override val dbUrl: String, override val dbConnectionProps: Map[Symbol,String], override val table: String, override val aroundCommands: (Option[String],Option[String])) extends ImportStrategy {
-
+class CopyStrategy(override val dbUrl: String, override val dbUser: String, override val dbPass: String, override val table: String, override val preCmd: Option[String], override val postCmd: Option[String]) extends ImportStrategy {
+  
   val Delimiter = "\037"
 
   private def copyCmd(destColumns: Seq[Symbol]) = s"""

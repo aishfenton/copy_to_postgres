@@ -1,4 +1,4 @@
-package com.opentable.copy_to_postgres.mapping
+package copy_to_postgres.mapping
 
 sealed trait MapInput
 

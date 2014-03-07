@@ -1,4 +1,4 @@
-package com.opentable.copy_to_postgres.util
+package copy_to_postgres.util
 
 import scala.collection.mutable.ArrayBuffer
 import java.io.InputStream
